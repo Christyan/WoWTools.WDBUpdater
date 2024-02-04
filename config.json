@@ -1,0 +1,5 @@
+{
+  "config": {
+    "connectionstring": "Server=localhost;Database=wowtools;Uid=wowtools;Pwd=password"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WoWTools.WDBUpdater": {
+      "commandName": "Project",
+      "commandLineArgs": "\"questcache.wdb\" txt"
+    }
+  }
+}
