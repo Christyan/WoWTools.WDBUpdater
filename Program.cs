@@ -7,14 +7,39 @@ namespace WoWTools.WDBUpdater
     {
         static void Main(string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length < 2)
             {
                 Console.WriteLine(String.Format("Usage: {0} wdbfile mysql/txt", System.AppDomain.CurrentDomain.FriendlyName));
                 return;
             }
 
+            HashSet<UInt32> acceptedBuild = null;
+
+            if (args.Length >= 3)
+            {
+                if (args[2] == "onlyretail")
+                {
+                    acceptedBuild = new HashSet<UInt32>();
+                    using (var connection = new MySqlConnection(SettingsManager.connectionString))
+                    {
+                        connection.Open();
+                        using (var command = new MySqlCommand("SELECT build FROM `wowtools`.`wow_builds` WHERE `branch` = \"Retail\"", connection))
+                        {
+                            using (MySqlDataReader mreader = command.ExecuteReader())
+                            {
+                                while (mreader.Read())
+                                {
+                                    acceptedBuild.Add(mreader.GetUInt32(0));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             WDBReader reader = new WDBReader(args[0]);
-            reader.Read();
+            if (!reader.Read(acceptedBuild))
+                return;
 
             QuestCache.Parse(reader);
             CreatureCache.Parse(reader);

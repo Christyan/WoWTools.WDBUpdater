@@ -69,21 +69,33 @@ namespace WoWTools.WDBUpdater
             fileName = _filename;
         }
 
-        public void Read()
+        public bool Read(HashSet<UInt32> acceptedBuilds)
         {
             using (Stream sr = File.Open(fileName, FileMode.Open))
             {
                 using (BinaryReader reader = new BinaryReader(sr))
                 {
                     if (reader.BaseStream.Length < headerSize)
-                        throw new Exception(string.Format("File {0} is not a valid wdb file! Header size is wrong.", fileName));
+                    {
+                        Console.WriteLine(string.Format("File {0} is not a valid wdb file! Header size is wrong.", fileName));
+                        return false;
+                    }
 
                     Signature = (WDBFIles)reader.ReadUInt32();
 
                     if (!WDBTables.ContainsKey(Signature))
-                        throw new InvalidDataException(string.Format("File {0} is not a valid wdb file!", fileName));
+                    {
+                        Console.WriteLine(string.Format("File {0} is not a valid wdb file!", fileName));
+                        return false;
+                    }
 
                     Build = reader.ReadUInt32();
+                    if (acceptedBuilds != null && !acceptedBuilds.Contains(Build))
+                    {
+                        Console.WriteLine(string.Format("File {0} build ({1}) is not accepted!", fileName, Build));
+                        return false;
+                    }
+
                     if (Build >= 4500) // 1.6.0.4500
                         Locale = reader.ReadBytes(4);
                     RecordSize = reader.ReadUInt32();
@@ -102,6 +114,7 @@ namespace WoWTools.WDBUpdater
 
                 }
             }
+            return true;
         }
     }
 }
