@@ -45,6 +45,7 @@ namespace WoWTools.WDBUpdater
             CreatureCache.Parse(reader);
             GameObejctCache.Parse(reader);
             PageTextCache.Parse(reader);
+            NpcCache.Parse(reader);
 
             switch (args[1])
             {
