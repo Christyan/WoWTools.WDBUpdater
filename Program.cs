@@ -53,6 +53,7 @@ namespace WoWTools.WDBUpdater
                     Utils.Dumper<CreatureCache>.DumpWDBText();
                     Utils.Dumper<GameObejctCache>.DumpWDBText();
                     Utils.Dumper<PageTextCache>.DumpWDBText();
+                    Utils.Dumper<NpcCache>.DumpWDBText();
                     break;
                 case "mysql":
 
@@ -63,6 +64,7 @@ namespace WoWTools.WDBUpdater
                         Utils.Dumper<CreatureCache>.DumpToSql(connection, reader);
                         Utils.Dumper<GameObejctCache>.DumpToSql(connection, reader);
                         Utils.Dumper<PageTextCache>.DumpToSql(connection, reader);
+                        Utils.Dumper<NpcCache>.DumpToSql(connection, reader);
                     }
                     break;
             }

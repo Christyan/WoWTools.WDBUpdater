@@ -46,7 +46,7 @@ namespace WoWTools.WDBUpdater
             { WDBFIles.ItemNameCache, "" },
             { WDBFIles.ItemTextCache, "" },
             { WDBFIles.NameCache, "" },
-            { WDBFIles.NPCCache, "" },
+            { WDBFIles.NPCCache, "wdb_npctext" },
             { WDBFIles.PageTextCache, "wdb_pagetext" },
             { WDBFIles.PetitionCache, "" },
             { WDBFIles.PetNameCache, "" },
